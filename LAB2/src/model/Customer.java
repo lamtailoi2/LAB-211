@@ -1,6 +1,10 @@
 package model;
 
-public class Customer {
+import java.io.Serializable;
+import java.util.Arrays;
+import java.util.Objects;
+
+public class Customer implements Serializable {
 
     private String code;
     private String name;
@@ -11,7 +15,7 @@ public class Customer {
     }
 
     public Customer(String code, String name, String phone, String email) {
-        this.code = code;
+        this.code = code.toUpperCase();
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -22,7 +26,7 @@ public class Customer {
     }
 
     public void setCode(String code) {
-        this.code = code;
+        this.code = code.toUpperCase();
     }
 
     public String getName() {
@@ -49,4 +53,25 @@ public class Customer {
         this.email = email;
     }
 
+    @Override
+    public String toString() {
+        String[] nameSplit = name.split(" ");
+        String formattedName = nameSplit[nameSplit.length - 1] + ", " + String.join(" ", Arrays.copyOf(nameSplit, nameSplit.length - 1));
+        return String.format("%-8s| %-22s| %-12s| %-19s", code, formattedName, phone, email);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Customer other = (Customer) obj;
+        return Objects.equals(this.code, other.code);
+    }
 }
