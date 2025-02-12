@@ -12,11 +12,10 @@ import model.FeastMenu;
 
 public class FeastMenus extends ArrayList<FeastMenu> {
 
-    private String pathFile;
+    private final String pathFile = "./FeastMenu.csv";
 
     public FeastMenus() {
         super();
-        this.pathFile = "./FeastMenu.csv";
         readFromFile();
     }
 
@@ -27,7 +26,7 @@ public class FeastMenus extends ArrayList<FeastMenu> {
                 System.out.println("----------------------------------------");
             }
         } else {
-            System.out.println("Empty");
+            System.out.println("The Menu is Empty");
         }
 
     }
@@ -71,12 +70,17 @@ public class FeastMenus extends ArrayList<FeastMenu> {
         return x;
     }
 
-    public boolean isValidCode(String code) {
+    public FeastMenu findFeastMenuByCode(String code) {
         for (FeastMenu i : this) {
             if (i.getCode().compareToIgnoreCase(code) == 0) {
-                return true;
+                return i;
             }
         }
-        return false;
+        return null;
     }
+
+    public boolean isValidCode(String code) {
+        return findFeastMenuByCode(code) != null;
+    }
+
 }

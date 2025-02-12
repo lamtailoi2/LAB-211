@@ -1,5 +1,6 @@
 package tool;
 
+import java.util.Date;
 import java.util.Scanner;
 import java.util.function.Predicate;
 
@@ -61,7 +62,7 @@ public class Inputter {
                 System.out.println(errorMsg);
             }
         } while (isLoop && !isUpdate);
-        return res;
+        return res.trim();
     }
 
     /**
@@ -85,7 +86,6 @@ public class Inputter {
                 System.out.println(errorMsg);
             }
         } while (isLoop && !isUpdate);
-        return res;
+        return res.trim();
     }
-    
 }

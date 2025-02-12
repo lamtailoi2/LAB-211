@@ -33,6 +33,11 @@ public class Customer implements Serializable {
         return name;
     }
 
+    public String getFirstName() {
+        String[] nameSplit = name.split(" ");
+        return nameSplit[nameSplit.length - 1];
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -56,7 +61,12 @@ public class Customer implements Serializable {
     @Override
     public String toString() {
         String[] nameSplit = name.split(" ");
-        String formattedName = nameSplit[nameSplit.length - 1] + ", " + String.join(" ", Arrays.copyOf(nameSplit, nameSplit.length - 1));
+        String formattedName;
+        if (nameSplit.length > 1) {
+            formattedName = getFirstName() + ", " + String.join(" ", Arrays.copyOf(nameSplit, nameSplit.length - 1));
+        } else {
+            formattedName = name; 
+        }
         return String.format("%-8s| %-22s| %-12s| %-19s", code, formattedName, phone, email);
     }
 
