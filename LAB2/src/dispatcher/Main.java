@@ -119,7 +119,7 @@ public class Main {
             }
         }
         x.setName(input.inputAndLoop("Enter Customer's Name [2-25 characters]: ", Acceptable.NAME_VALID, "Customer's Name is invalid. Re-enter ....", isUpdate));
-        x.setEmail(input.inputAndLoop("Enter Customer's Email: ", Acceptable.EMAIL_VALID, "Customer's Name is invalid. Re-enter ....", isUpdate));
+        x.setEmail(input.inputAndLoop("Enter Customer's Email: ", Acceptable.EMAIL_VALID, "Customer's Email is invalid. Re-enter ....", isUpdate));
         x.setPhone(input.inputAndLoop("Enter Customer's Phone: ", Acceptable.PHONE_VALID, "Customer's Phone is invalid. Re-enter ....", isUpdate));
         return x;
     }
