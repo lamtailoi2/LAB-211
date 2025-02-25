@@ -82,7 +82,7 @@ public class Car implements Serializable {
         return regLocation;
     }
 
-    public void setRegLocation(String regLocation) {
+    public void setRegLocation() {
         Character code = licensePlate.charAt(2);
         this.regLocation = DistrictMapper.getDistrictName(code.toString());
     }

@@ -50,7 +50,6 @@ public enum DistrictMapper {
 
     public static boolean isValidCode(String licensePlate) {
         try {
-            System.out.println(licensePlate);
             Character code = licensePlate.charAt(2);
             return getCode(code.toString()) != null && Acceptable.isValid(licensePlate, Acceptable.LICENSE_VALID);
         } catch (Exception e) {

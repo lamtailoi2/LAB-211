@@ -14,6 +14,8 @@ public interface Acceptable {
     public final String VALUE_VALID = "^[1-9]\\d{3,}$";
     public final String POS_INT_VALID = "^[1-9]+$";
     public final String LICENSE_VALID = "^5[1-9][a-zA-z][1-9]\\d{5}$";
+    public final String ID_VALID = "^\\w{4}$";
+    public final String PERIOD_VALID = "^(12|24|36)$";
 
     /**
      * Validate data

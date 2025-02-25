@@ -8,4 +8,6 @@ public interface DateParser {
     public static LocalDate parse(String data, String pattern) {
         return LocalDate.parse(data, DateTimeFormatter.ofPattern(pattern));
     }
+    
+ 
 }
