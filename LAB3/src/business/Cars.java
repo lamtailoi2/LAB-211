@@ -54,7 +54,7 @@ public class Cars extends HashMap<String, Car> {
         Car oldCar = this.get(newCar.getLicensePlate());
         oldCar.setOwner(newCar.getOwner().length() > 0 ? newCar.getOwner() : oldCar.getOwner());
         oldCar.setPhone(newCar.getPhone().length() > 0 ? newCar.getPhone() : oldCar.getPhone());
-        oldCar.setNumberOfSeat(newCar.getValue() > 999 ? newCar.getValue() : oldCar.getValue());
+        oldCar.setNumberOfSeat(newCar.getValue() > 0 ? newCar.getValue() : oldCar.getValue());
         oldCar.setBrand(newCar.getBrand().length() > 0 ? newCar.getBrand() : oldCar.getBrand());
         this.showAll();
         this.saved = false;
