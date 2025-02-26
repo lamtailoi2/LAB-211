@@ -35,7 +35,16 @@ public class Insurances extends HashMap<String, InsuranceInfo> {
             "Insurance fees"
     );
     private final String TABLE_HEADER_2 = String.format("%-4s %-12s %-15s %-15s %-15s %-10s %-12s\n",
-            "No.", "LicensePlate", "RegDate", "Owner", "Brand", "Seats", "Value");
+            "No.",
+            "LicensePlate",
+            "RegDate",
+            "Owner",
+            "Brand",
+            "Seats",
+            "Value"
+    );
+
+    private final String LINE = "----------------------------------------------------------------------------------------------";
     private final String pathFile = "./insurances.dat";
     private boolean saved;
 
@@ -45,7 +54,7 @@ public class Insurances extends HashMap<String, InsuranceInfo> {
         this.cars = cars;
         this.saved = true;
     }
-    
+
     public boolean isSaved() {
         return this.saved;
     }
@@ -54,12 +63,12 @@ public class Insurances extends HashMap<String, InsuranceInfo> {
         Car car = cars.findCarByLicensePlate(x.getLicensePlate());
         x.calculateFees(car.getValue());
         this.put(x.getId(), x);
+        System.out.println("Add Successful");
         this.saved = false;
     }
 
     public List<InsuranceInfo> findByYear(int year) {
         List<InsuranceInfo> list = new ArrayList<>();
-
         for (InsuranceInfo info : this.values()) {
             String dateStr = info.getEstablishedDate();
             LocalDate date = DateParser.parse(dateStr, "MM/dd/yyyy");
@@ -116,21 +125,20 @@ public class Insurances extends HashMap<String, InsuranceInfo> {
         System.out.println("Sorted by: Established Date");
         System.out.println("Sort type : ASC\n");
 
-        // Print the table header
         System.out.printf(TABLE_HEADER_2);
 
-        System.out.println("----------------------------------------------------------------------------------------------");
-
+        System.out.println(LINE);
+        DecimalFormat df = new DecimalFormat("#,000");
         int i = 1;
         for (InsuranceInfo ins : list) {
-            System.out.printf("%-4d %-12s %-15s %-15s %-15s %-18d $%,.0f%n",
+            System.out.printf("%-4d %-12s %-15s %-15s %-15s %-18d $%s\n",
                     i,
                     ins.getId(),
                     ins.getEstablishedDate(),
                     ins.getLicensePlate(),
                     ins.getOwner(),
                     ins.getPeriod(),
-                    ins.getFees()
+                    df.format(ins.getFees())
             );
             i++;
         }
@@ -138,6 +146,7 @@ public class Insurances extends HashMap<String, InsuranceInfo> {
 
     public void showUninsured() {
         List<Car> list = findUninsured();
+        System.out.println(list);
         if (list.isEmpty()) {
             System.out.println("List is empty!");
         } else {
@@ -145,13 +154,13 @@ public class Insurances extends HashMap<String, InsuranceInfo> {
             System.out.println("Sorted by : Vehicle type");
             System.out.println("Sort type : DESC\n");
 
-            System.out.print(TABLE_HEADER);
+            System.out.print(TABLE_HEADER_2);
+            System.out.println(LINE);
 
-            System.out.println("----------------------------------------------------------------------------------------------");
             DecimalFormat df = new DecimalFormat("#,000");
             int i = 1;
             for (Car car : list) {
-                System.out.printf("%-4d %-12s %-15s %-15s %-15s %-10d $%s\n",
+                System.out.printf("%-4d %-12s %-15s %-15s %-15s %-10d $%-12s\n",
                         i,
                         car.getLicensePlate(),
                         car.getRegDate(),
@@ -213,6 +222,7 @@ public class Insurances extends HashMap<String, InsuranceInfo> {
                 for (InsuranceInfo i : this.values()) {
                     oos.writeObject(i);
                 }
+                this.saved = true;
                 oos.close();
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Insurances.class.getName()).log(Level.SEVERE, null, ex);
@@ -221,6 +231,7 @@ public class Insurances extends HashMap<String, InsuranceInfo> {
             } finally {
                 try {
                     fos.close();
+                    System.out.println("insurances.dat File Save Successful!");
                 } catch (IOException ex) {
                     Logger.getLogger(Insurances.class.getName()).log(Level.SEVERE, null, ex);
                 }

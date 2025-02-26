@@ -16,7 +16,6 @@ public class Car implements Serializable {
     private int numberOfSeat;
 
     public Car() {
-
     }
 
     public Car(String licensePlate, String owner, String phone, String brand, int value, String regDate, int numberOfSeat) {
@@ -26,8 +25,8 @@ public class Car implements Serializable {
         this.brand = brand.toUpperCase();
         this.value = value;
         this.regDate = regDate;
-        setLicensePlate(licensePlate);
         this.numberOfSeat = numberOfSeat;
+        setRegLocation();
     }
 
     public String getLicensePlate() {
@@ -36,6 +35,7 @@ public class Car implements Serializable {
 
     public void setLicensePlate(String licensePlate) {
         this.licensePlate = licensePlate.toUpperCase();
+        setRegLocation();
     }
 
     public String getOwner() {
@@ -82,9 +82,11 @@ public class Car implements Serializable {
         return regLocation;
     }
 
-    public void setRegLocation() {
-        Character code = licensePlate.charAt(2);
-        this.regLocation = DistrictMapper.getDistrictName(code.toString());
+    private void setRegLocation() {
+        if (licensePlate != null && licensePlate.length() >= 3) {
+            char code = licensePlate.charAt(2);
+            this.regLocation = DistrictMapper.getDistrictName(String.valueOf(code));
+        }
     }
 
     public int getNumberOfSeat() {
@@ -97,9 +99,7 @@ public class Car implements Serializable {
 
     @Override
     public int hashCode() {
-        int hash = 7;
-        hash = 79 * hash + Objects.hashCode(this.licensePlate);
-        return hash;
+        return Objects.hash(licensePlate);
     }
 
     @Override
@@ -107,36 +107,26 @@ public class Car implements Serializable {
         if (this == obj) {
             return true;
         }
-        if (obj == null) {
+        if (obj == null || getClass() != obj.getClass()) {
             return false;
         }
-        if (getClass() != obj.getClass()) {
-            return false;
-        }
-        final Car other = (Car) obj;
+        Car other = (Car) obj;
         return Objects.equals(this.licensePlate, other.licensePlate);
     }
 
     @Override
     public String toString() {
         return String.format(
-                "-----------------------------------------------------%n"
-                + "License plate    : %s%n"
-                + "Owner            : %s%n"
-                + "Phone            : %s%n"
-                + "Car brand        : %s%n"
-                + "Value of vehicle : %,d%n"
-                + "Number of seats  : %d%n"
-                + "Registration date: %s%n"
+                "-----------------------------------------------------\n"
+                + "License plate    : %s\n"
+                + "Owner            : %s\n"
+                + "Phone            : %s\n"
+                + "Car brand        : %s\n"
+                + "Value of vehicle : %,d\n"
+                + "Number of seats  : %d\n"
+                + "Registration date: %s\n"
+                + "Registration loc : %s\n"
                 + "-----------------------------------------------------",
-                licensePlate,
-                owner,
-                phone,
-                brand,
-                value,
-                numberOfSeat,
-                regDate
-        );
+                licensePlate, owner, phone, brand, value, numberOfSeat, regDate, regLocation);
     }
-
 }

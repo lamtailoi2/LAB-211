@@ -5,7 +5,6 @@ import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.ObjectInput;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.HashMap;
@@ -62,7 +61,9 @@ public class Cars extends HashMap<String, Car> {
     }
 
     public void deleteCar(String licensePlate) {
-        this.remove(licensePlate);
+        this.remove(licensePlate.toUpperCase());
+        System.out.println(">>>>>");
+        showAll();
         this.saved = false;
         System.out.println("The registration has been successfully deleted.");
     }
@@ -107,6 +108,7 @@ public class Cars extends HashMap<String, Car> {
                 for (Car i : this.values()) {
                     oos.writeObject(i);
                 }
+                this.saved = true;
                 oos.close();
             } catch (FileNotFoundException ex) {
                 Logger.getLogger(Cars.class.getName()).log(Level.SEVERE, null, ex);
@@ -115,7 +117,7 @@ public class Cars extends HashMap<String, Car> {
             } finally {
                 try {
                     fos.close();
-                    System.out.println("Saved Successful");
+                    System.out.println("cars.dat File Save Successful!");
                 } catch (IOException ex) {
                     Logger.getLogger(Cars.class.getName()).log(Level.SEVERE, null, ex);
                 }

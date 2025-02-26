@@ -109,8 +109,7 @@ public class Main {
                 default:
                     System.out.println("Invalid choice");
             }
-        } while (choice
-                != 9);
+        } while (choice != 9);
     }
 
     public static Car inputCar(String existLicense, boolean isUpdate) {
@@ -216,11 +215,11 @@ public class Main {
 
     public static void findByYear() {
         int year = input.getInt("Enter year: ");
-        List<InsuranceInfo> list = new ArrayList<>();
-        if (!(list = insurances.findByYear(year)).isEmpty()) {
-            insurances.showAll(list, year);
-        } else {
+        List<InsuranceInfo> list = insurances.findByYear(year);
+        if (list.isEmpty()) {
             System.out.println("List is empty!");
+        } else {
+            insurances.showAll(list, year);
         }
     }
 

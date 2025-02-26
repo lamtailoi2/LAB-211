@@ -45,7 +45,7 @@ public enum DistrictMapper {
 
     public static String getDistrictName(String code) {
         DistrictMapper d = getCode(code);
-        return d != null ? d.name() : "Unknown!";
+        return d != null ? d.getCity() : "Unknown!";
     }
 
     public static boolean isValidCode(String licensePlate) {
