@@ -2,7 +2,7 @@ package dispatcher;
 
 import business.Cars;
 import business.Insurances;
-import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import tool.Inputter;
 import tool.DistrictMapper;
@@ -93,6 +93,23 @@ public class Main {
                 case 8:
                     save();
                     break;
+                case 11:
+                    HashMap<String, Double> map = insurances.countCar();
+                    HashMap<String, Double> carMap = cars.countCar();
+                    HashMap<String, Double> results = new HashMap();
+                    System.out.println(carMap.values());
+                    System.out.println(map.values());
+//                    for (String brand : map.keySet()) {
+//                        for (String a : carMap.keySet()) {
+//                            if (brand.equalsIgnoreCase(a)) {
+//                                results.put(brand, map.get(brand) / carMap.get(a));
+//                            }
+//                        }
+//                        for (String br : results.keySet()) {
+//                            System.out.println(br + ":" + results.get(brand));
+//                        }
+//                    }
+                    break;
                 case 9:
                     if (cars.isSaved() && insurances.isSaved()) {
                         System.out.println("Bye");
@@ -112,6 +129,15 @@ public class Main {
         } while (choice != 9);
     }
 
+    /**
+     * *
+     * Request input car information. If isUpdate = true, just allow user input
+     * update field
+     *
+     * @param existLicense
+     * @param isUpdate
+     * @return
+     */
     public static Car inputCar(String existLicense, boolean isUpdate) {
         Car newCar = new Car();
         if (!isUpdate) {
@@ -126,7 +152,7 @@ public class Main {
                 }
             }
             newCar.setValue(Integer.parseInt(input.inputAndLoop("Enter Car Value: ", Acceptable.VALUE_VALID, "Invalid Car Value", isUpdate)));
-            newCar.setRegDate(input.inputAndLoop("Enter Registration Date: ", Acceptable::isValidFutureDate, "Invalid date", isUpdate));
+            newCar.setRegDate(input.inputAndLoop("Enter Registration Date [mm/dd/yyyy]: ", Acceptable::isValidPastDate, "Invalid date", isUpdate));
         } else {
             newCar.setLicensePlate(existLicense);
         }
@@ -139,6 +165,12 @@ public class Main {
 
     }
 
+    /**
+     * *
+     * Request user input insurance information
+     *
+     * @return
+     */
     public static InsuranceInfo inputInsurance() {
         InsuranceInfo ins = new InsuranceInfo();
         boolean isLoop = true;
@@ -162,7 +194,7 @@ public class Main {
                 System.out.println("License Plate is not existed");
             }
         }
-        ins.setEstablishedDate(input.inputAndLoop("Enter Established Date: ", Acceptable::isValidFutureDate, "Invalid Date", false));
+        ins.setEstablishedDate(input.inputAndLoop("Enter Established Date [mm/dd/yyyy]: ", Acceptable::isValidFutureDate, "Invalid Date", false));
         ins.setPeriod(Integer.parseInt(input.inputAndLoop("Enter Period: ", Acceptable.PERIOD_VALID, "Invalid Period", false)));
         return ins;
 
@@ -195,10 +227,14 @@ public class Main {
     public static void deleteCar() {
         String licensePlate = input.inputAndLoop("Enter License Plate: ", DistrictMapper::isValidCode, "Invalid License Plate", true);
         Car x = cars.findCarByLicensePlate(licensePlate);
+        if (insurances.findByLicensePlate(x.getLicensePlate()) != null) {
+            System.out.println("Cannot delete registered car!");
+            return;
+        }
         if (x != null) {
             System.out.println(x);
             String hd = input.inputAndLoop("Are you sure you want to delete this registration? (Y/N): ", Acceptable.YN_VALID, "Invalid choice", false);
-            if (hd.compareToIgnoreCase("y") == 0) {
+            if (hd.equalsIgnoreCase("y")) {
                 cars.deleteCar(licensePlate);
             }
         } else {

@@ -28,12 +28,22 @@ public class Cars extends HashMap<String, Car> {
         return this.saved;
     }
 
+    /**
+     * Add new Car to Map
+     *
+     * @param newCar
+     */
     public void addCar(Car newCar) {
+        // Use License Plate as a key
         this.put(newCar.getLicensePlate(), newCar);
         this.saved = false;
         System.out.println("Add Successful");
     }
 
+    /**
+     * *
+     * Display all cars
+     */
     public void showAll() {
         Iterator itr = this.values().iterator();
         while (itr.hasNext()) {
@@ -49,6 +59,12 @@ public class Cars extends HashMap<String, Car> {
         return this.containsKey(licensePlate.toUpperCase());
     }
 
+    /**
+     * *
+     * Update selected car with new information, if not keep all old value
+     *
+     * @param newCar
+     */
     public void updateCar(Car newCar) {
         Car oldCar = this.get(newCar.getLicensePlate());
         oldCar.setOwner(newCar.getOwner().length() > 0 ? newCar.getOwner() : oldCar.getOwner());
@@ -60,10 +76,28 @@ public class Cars extends HashMap<String, Car> {
         System.out.println("Update Successful!");
     }
 
+    public HashMap<String, Double> countCar() {
+        HashMap<String, Double> map = new HashMap();
+
+        for (Car car : this.values()) {
+
+            if (!map.containsKey(car.getBrand())) {
+                map.put(car.getBrand(), 1.0);
+            } else {
+                map.put(car.getBrand(), map.get(car.getBrand()) + 1.0);
+            }
+        }
+        return map;
+    }
+
+    /**
+     * *
+     * Delete car from a Map
+     *
+     * @param licensePlate
+     */
     public void deleteCar(String licensePlate) {
         this.remove(licensePlate.toUpperCase());
-        System.out.println(">>>>>");
-        showAll();
         this.saved = false;
         System.out.println("The registration has been successfully deleted.");
     }

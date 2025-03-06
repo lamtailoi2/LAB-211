@@ -30,7 +30,7 @@ public class Car implements Serializable {
     }
 
     public String getLicensePlate() {
-        return licensePlate;
+        return licensePlate.toUpperCase();
     }
 
     public void setLicensePlate(String licensePlate) {
@@ -127,6 +127,6 @@ public class Car implements Serializable {
                 + "Registration date: %s\n"
                 + "Registration loc : %s\n"
                 + "-----------------------------------------------------",
-                licensePlate, owner, phone, brand, value, numberOfSeat, regDate, regLocation);
+                licensePlate.toUpperCase(), owner, phone, brand, value, numberOfSeat, regDate, regLocation);
     }
 }

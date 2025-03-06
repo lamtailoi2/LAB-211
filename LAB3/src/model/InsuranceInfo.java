@@ -62,13 +62,10 @@ public class InsuranceInfo implements Serializable {
 
     /**
      * Calculates insurance fees based on the vehicle's value.
-     * <p>
      * Fee calculation rules:
-     * <ul>
-     * <li>If period is 12 months: fees = 25% of car value</li>
-     * <li>If period is 24 months: fees = 20% of car value * 2</li>
-     * <li>If period is 36 months: fees = 15% of car value * 3</li>
-     * </ul>
+     * If period is 12 months: fees = 25% of car value
+     * If period is 24 months: fees = 20% of car value * 2
+     * If period is 36 months: fees = 15% of car value * 3
      *
      * @param carValue The value of the vehicle.
      * @throws IllegalArgumentException if the period is not one of the allowed

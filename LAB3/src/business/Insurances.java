@@ -15,6 +15,7 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Car;
@@ -59,14 +60,26 @@ public class Insurances extends HashMap<String, InsuranceInfo> {
         return this.saved;
     }
 
+    /**
+     * Adds a new insurance record to the system.
+     *
+     * @param x The InsuranceInfo object to be added.
+     */
     public void addInsurance(InsuranceInfo x) {
         Car car = cars.findCarByLicensePlate(x.getLicensePlate());
+        // Calculate Fees base on car value
         x.calculateFees(car.getValue());
         this.put(x.getId(), x);
         System.out.println("Add Successful");
         this.saved = false;
     }
 
+    /**
+     * Finds all insurance records for a given year.
+     *
+     * @param year The year to filter records.
+     * @return List of InsuranceInfo for the given year.
+     */
     public List<InsuranceInfo> findByYear(int year) {
         List<InsuranceInfo> list = new ArrayList<>();
         for (InsuranceInfo info : this.values()) {
@@ -88,6 +101,12 @@ public class Insurances extends HashMap<String, InsuranceInfo> {
         return list;
     }
 
+    /**
+     * Finds an insurance record by license plate.
+     *
+     * @param licensePlate The license plate to search for.
+     * @return The InsuranceInfo object if found, otherwise null.
+     */
     public InsuranceInfo findByLicensePlate(String licensePlate) {
         Iterator itr = this.values().iterator();
         InsuranceInfo ins = null;
@@ -100,6 +119,11 @@ public class Insurances extends HashMap<String, InsuranceInfo> {
         return ins;
     }
 
+    /**
+     * Finds all cars that do not have insurance.
+     *
+     * @return List of uninsured Car objects.
+     */
     public List<Car> findUninsured() {
         List<Car> list = new ArrayList<>();
 
@@ -119,6 +143,12 @@ public class Insurances extends HashMap<String, InsuranceInfo> {
         return list;
     }
 
+    /**
+     * Displays all insurance records for a given year.
+     *
+     * @param list The list of insurance records.
+     * @param year The year to filter records.
+     */
     public void showAll(List<InsuranceInfo> list, int year) {
         System.out.println("Report : INSURANCE STATEMENTS");
         System.out.println("From : 01/01/" + year + "To: 12/31/" + year);
@@ -144,6 +174,10 @@ public class Insurances extends HashMap<String, InsuranceInfo> {
         }
     }
 
+    /**
+     * *
+     * Displays all uninsured records for a given year.
+     */
     public void showUninsured() {
         List<Car> list = findUninsured();
         System.out.println(list);
@@ -177,6 +211,26 @@ public class Insurances extends HashMap<String, InsuranceInfo> {
 
     public boolean isExist(String ID) {
         return this.containsKey(ID);
+    }
+    
+    public Car getCarInfo(String code) {
+        for (InsuranceInfo info : this.values()) {
+            
+        }
+    }
+
+    public HashMap<String, Double> countCar() {
+        HashMap<String, Double> map = new HashMap();
+
+        for (InsuranceInfo car : this.values()) {
+
+            if (!map.containsKey(car.get)) {
+                map.put(car.getBrand(), 1.0);
+            } else {
+                map.put(car.getBrand(), map.get(car.getBrand()) + 1);
+            }
+        }
+        return map;
     }
 
     public void loadFromFile() {

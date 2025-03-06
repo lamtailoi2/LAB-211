@@ -48,4 +48,24 @@ public interface Acceptable {
         }
     }
 
+    /**
+     * Validates whether the provided date string represents a valid future
+     * date. The expected date format is "MM/dd/yyyy".
+     *
+     * @param data the input date string.
+     * @return true if the date is correctly formatted and is before the current
+     * date, false otherwise.
+     */
+    public static boolean isValidPastDate(String data) {
+        try {
+            // Parse the date using the defined date format.
+            LocalDate eventDate = DateParser.parse(data, "MM/dd/yyyy");
+            // Check if the event date is in the future compared to the current date.
+            return eventDate.isBefore(LocalDate.now());
+        } catch (DateTimeParseException e) {
+            // If parsing fails, return 
+            return false;
+        }
+    }
+
 }
