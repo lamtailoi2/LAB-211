@@ -15,7 +15,6 @@ import java.util.Comparator;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import model.Car;
@@ -211,26 +210,6 @@ public class Insurances extends HashMap<String, InsuranceInfo> {
 
     public boolean isExist(String ID) {
         return this.containsKey(ID);
-    }
-    
-    public Car getCarInfo(String code) {
-        for (InsuranceInfo info : this.values()) {
-            
-        }
-    }
-
-    public HashMap<String, Double> countCar() {
-        HashMap<String, Double> map = new HashMap();
-
-        for (InsuranceInfo car : this.values()) {
-
-            if (!map.containsKey(car.get)) {
-                map.put(car.getBrand(), 1.0);
-            } else {
-                map.put(car.getBrand(), map.get(car.getBrand()) + 1);
-            }
-        }
-        return map;
     }
 
     public void loadFromFile() {

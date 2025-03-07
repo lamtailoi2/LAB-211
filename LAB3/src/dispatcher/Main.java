@@ -93,23 +93,6 @@ public class Main {
                 case 8:
                     save();
                     break;
-                case 11:
-                    HashMap<String, Double> map = insurances.countCar();
-                    HashMap<String, Double> carMap = cars.countCar();
-                    HashMap<String, Double> results = new HashMap();
-                    System.out.println(carMap.values());
-                    System.out.println(map.values());
-//                    for (String brand : map.keySet()) {
-//                        for (String a : carMap.keySet()) {
-//                            if (brand.equalsIgnoreCase(a)) {
-//                                results.put(brand, map.get(brand) / carMap.get(a));
-//                            }
-//                        }
-//                        for (String br : results.keySet()) {
-//                            System.out.println(br + ":" + results.get(brand));
-//                        }
-//                    }
-                    break;
                 case 9:
                     if (cars.isSaved() && insurances.isSaved()) {
                         System.out.println("Bye");

@@ -35,8 +35,9 @@ public class Cars extends HashMap<String, Car> {
      */
     public void addCar(Car newCar) {
         // Use License Plate as a key
-        this.put(newCar.getLicensePlate(), newCar);
-        this.saved = false;
+        if (this.put(newCar.getLicensePlate(), newCar) != null) {
+            this.saved = false;
+        }
         System.out.println("Add Successful");
     }
 
@@ -97,8 +98,9 @@ public class Cars extends HashMap<String, Car> {
      * @param licensePlate
      */
     public void deleteCar(String licensePlate) {
-        this.remove(licensePlate.toUpperCase());
-        this.saved = false;
+        if (this.remove(licensePlate.toUpperCase()) != null) {
+                    this.saved = false;
+        }
         System.out.println("The registration has been successfully deleted.");
     }
 
